@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox, simpledialog
+from tkinter import messagebox
 
 class TodoApp:
     def __init__(self, root):
@@ -12,10 +12,7 @@ class TodoApp:
         # กล่องป้อนงาน
         self.entry = tk.Entry(root, width=30)
         self.entry.pack(pady=10)
-
-        # ปุ่มเพิ่มงาน
-        self.add_button = tk.Button(root, text="➕ เพิ่มงาน", command=self.add_task)
-        self.add_button.pack()
+        self.entry.bind("<Return>", self.add_task)  # กด Enter เพื่อเพิ่ม
 
         # รายการงาน
         self.listbox = tk.Listbox(root, width=40, height=15)
@@ -29,10 +26,10 @@ class TodoApp:
         self.save_button = tk.Button(root, text="💾 บันทึกลงไฟล์", command=self.save_tasks)
         self.save_button.pack(pady=5)
 
-        # โหลดข้อมูลเดิม (ถ้ามี)
+        # โหลดข้อมูลเดิม
         self.load_tasks()
 
-    def add_task(self):
+    def add_task(self, event=None):
         task = self.entry.get()
         if task:
             self.tasks.append(task)
